@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trang Nhạc Đơn Giản</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #38bdf8;
+      font-family: sans-serif;
+      height: 100vh;
+    }
+
+    .screen {
+      width: 100%;
+      height: 100vh;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .active {
+      display: flex;
+    }
+
+    button {
+      background-color: white;
+      color: #0ea5e9;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #f0f0f0;
+    }
+
+    .popup-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .popup {
+      background-color: white;
+      color: black;
+      padding: 20px 30px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      max-width: 90vw;
+      animation: zoomIn 0.3s ease;
+    }
+
+    .popup img {
+      width: 150px;
+      height: auto;
+      margin-top: 10px;
+    }
+
+    .popup button {
+      margin-top: 16px;
+      background-color: #0ea5e9;
+      color: white;
+    }
+
+    .popup button:hover {
+      background-color: #0284c7;
+    }
+
+    @keyframes zoomIn {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Nhạc -->
+  <audio id="bgMusic" loop>
+    <source src="phep-mau.mp3" type="audio/mpeg" />
+    Trình duyệt của bạn không hỗ trợ thẻ audio.
+  </audio>
+
+  <!-- Trang mở đầu -->
+  <div id="introScreen" class="screen active">
+    <h1>🎵 Chào mừng bạn đến với Trang Nhạc 🎶</h1>
+    <button onclick="startApp()">Bắt đầu</button>
+  </div>
+
+  <!-- Giao diện chính -->
+  <div id="mainScreen" class="screen">
+    <button onclick="toggleMusic()" id="musicButton">Tắt Nhạc</button>
+    <button onclick="openPopup()">Mở Thông Báo</button>
+  </div>
+
+  <!-- Popup -->
+  <div id="popup" class="popup-overlay" style="display: none;">
+    <div class="popup">
+      <p>🌟 Hello 🌈</p>
+      <img src="Stickers/hello.gif" alt="Sticker GIF vui nhộn" />
+      <br />
+      <button onclick="closePopup()">Đóng</button>
+    </div>
+  </div>
+
+  <script>
+    const bgMusic = document.getElementById("bgMusic");
+    const musicButton = document.getElementById("musicButton");
+    const introScreen = document.getElementById("introScreen");
+    const mainScreen = document.getElementById("mainScreen");
+
+    function startApp() {
+      introScreen.classList.remove("active");
+      mainScreen.classList.add("active");
+      bgMusic.play();
+      musicButton.textContent = "Tắt Nhạc";
+    }
+
+    function toggleMusic() {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        musicButton.textContent = "Tắt Nhạc";
+      } else {
+        bgMusic.pause();
+        musicButton.textContent = "Phát Nhạc";
+      }
+    }
+
+    function openPopup() {
+      document.getElementById("popup").style.display = "flex";
+    }
+
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+  </script>
+</body>
+</html>
